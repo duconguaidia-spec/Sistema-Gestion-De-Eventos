@@ -13,7 +13,14 @@ class StandardResponseMixin:
         'destroy': 'Registro eliminado correctamente.',
     }
 
-    error_message = 'La solicitud no pudo ser procesada.'
+    error_messages = {
+        400: 'Los datos enviados no son validos.',
+        401: 'No se enviaron credenciales de autenticacion validas.',
+        403: 'No tiene permisos para realizar esta accion.',
+        404: 'El recurso solicitado no existe.',
+        405: 'Metodo no permitido para este recurso.',
+        500: 'Ocurrio un error interno en el servidor.',
+    }
 
     def finalize_response(self, request, response, *args, **kwargs):
         response = super().finalize_response(request, response, *args, **kwargs)
@@ -43,7 +50,7 @@ class StandardResponseMixin:
 
         return {
             'success': False,
-            'message': self.error_message,
+            'message': self.get_error_message(response.status_code),
             'data': None,
             'errors': response.data,
         }
@@ -52,6 +59,12 @@ class StandardResponseMixin:
         return self.success_messages.get(
             getattr(self, 'action', None),
             'Solicitud procesada correctamente.',
+        )
+
+    def get_error_message(self, status_code):
+        return self.error_messages.get(
+            status_code,
+            'La solicitud no pudo ser procesada.',
         )
 
     def _is_standard_response(self, data):
@@ -71,9 +84,21 @@ def standard_exception_handler(exc, context):
     if isinstance(response.data, dict) and standard_keys.issubset(response.data.keys()):
         return response
 
+    error_messages = {
+        400: 'Los datos enviados no son validos.',
+        401: 'No se enviaron credenciales de autenticacion validas.',
+        403: 'No tiene permisos para realizar esta accion.',
+        404: 'El recurso solicitado no existe.',
+        405: 'Metodo no permitido para este recurso.',
+        500: 'Ocurrio un error interno en el servidor.',
+    }
+
     response.data = {
         'success': False,
-        'message': 'La solicitud no pudo ser procesada.',
+        'message': error_messages.get(
+            response.status_code,
+            'La solicitud no pudo ser procesada.',
+        ),
         'data': None,
         'errors': response.data,
     }
