@@ -1,6 +1,7 @@
 from django.db import models
 
-# Create your models here.
+
+# Modelo tabla Sede
 class Sede(models.Model):
     id_sede = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=200)
@@ -20,6 +21,7 @@ class Sede(models.Model):
         db_table = 'sedes'
 
 
+# Modelo tabla Organizador
 class Organizador(models.Model):
     id_organizador = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=200)
@@ -38,6 +40,7 @@ class Organizador(models.Model):
         db_table = 'organizadores'
 
 
+# Modelo tabla Evento
 class Evento(models.Model):
     id_evento = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=300)
@@ -45,8 +48,16 @@ class Evento(models.Model):
     fecha_inicio = models.DateTimeField()
     fecha_fin = models.DateTimeField()
     capacidad_maxima = models.IntegerField()
-    id_sede = models.IntegerField()
-    id_organizador = models.IntegerField()
+    id_sede = models.ForeignKey(
+        Sede,
+        on_delete=models.RESTRICT,
+        db_column='id_sede'
+    )
+    id_organizador = models.ForeignKey(
+        Organizador,
+        on_delete=models.RESTRICT,
+        db_column='id_organizador'
+    )
     activo = models.BooleanField(default=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
@@ -58,6 +69,7 @@ class Evento(models.Model):
         db_table = 'eventos'
 
 
+# Modelo tabla Asistente
 class Asistente(models.Model):
     id_asistente = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=200)
@@ -76,10 +88,19 @@ class Asistente(models.Model):
         db_table = 'asistentes'
 
 
+# Modelo tabla Inscripcion
 class Inscripcion(models.Model):
     id_inscripcion = models.AutoField(primary_key=True)
-    id_evento = models.IntegerField()
-    id_asistente = models.IntegerField()
+    id_evento = models.ForeignKey(
+        Evento,
+        on_delete=models.RESTRICT,
+        db_column='id_evento'
+    )
+    id_asistente = models.ForeignKey(
+        Asistente,
+        on_delete=models.RESTRICT,
+        db_column='id_asistente'
+    )
     estado = models.CharField(max_length=20, default='Pendiente')
     activo = models.BooleanField(default=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
@@ -92,9 +113,14 @@ class Inscripcion(models.Model):
         db_table = 'inscripciones'
 
 
+# Modelo tabla Pago
 class Pago(models.Model):
     id_pago = models.AutoField(primary_key=True)
-    id_inscripcion = models.IntegerField()
+    id_inscripcion = models.ForeignKey(
+        Inscripcion,
+        on_delete=models.RESTRICT,
+        db_column='id_inscripcion'
+    )
     monto = models.DecimalField(max_digits=10, decimal_places=2)
     metodo_pago = models.CharField(max_length=50, null=True, blank=True)
     estado = models.CharField(max_length=20, default='Pendiente')
@@ -110,6 +136,7 @@ class Pago(models.Model):
         db_table = 'pagos'
 
 
+# Modelo tabla Conferencia
 class Conferencia(models.Model):
     id_conferencia = models.AutoField(primary_key=True)
     titulo = models.CharField(max_length=300)
@@ -118,7 +145,11 @@ class Conferencia(models.Model):
     sala = models.CharField(max_length=100, null=True, blank=True)
     fecha_hora_inicio = models.DateTimeField(null=True, blank=True)
     duracion_minutos = models.IntegerField(null=True, blank=True)
-    id_evento = models.IntegerField()
+    id_evento = models.ForeignKey(
+        Evento,
+        on_delete=models.RESTRICT,
+        db_column='id_evento'
+    )
     activo = models.BooleanField(default=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
@@ -130,6 +161,7 @@ class Conferencia(models.Model):
         db_table = 'conferencias'
 
 
+# Modelo tabla Patrocinador
 class Patrocinador(models.Model):
     id_patrocinador = models.AutoField(primary_key=True)
     nombre = models.CharField(max_length=200)
@@ -139,7 +171,11 @@ class Patrocinador(models.Model):
     email_contacto = models.CharField(max_length=150, null=True, blank=True)
     nivel = models.CharField(max_length=20, null=True, blank=True)
     monto_aporte = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
-    id_evento = models.IntegerField()
+    id_evento = models.ForeignKey(
+        Evento,
+        on_delete=models.RESTRICT,
+        db_column='id_evento'
+    )
     activo = models.BooleanField(default=True)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
