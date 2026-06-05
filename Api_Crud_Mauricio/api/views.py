@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import filters, viewsets
 
 from .models import (
     Sede,
@@ -23,49 +23,56 @@ from .serializers import (
 )
 from .responses import StandardResponseMixin
 
+
+class BaseApiViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = '__all__'
+    ordering = ['-fecha_creacion']
+
+
 # Crud de tabla Sede (GET, POST, PUT, DELETE)
-class SedeViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class SedeViewSet(BaseApiViewSet):
     queryset = Sede.objects.all()
     serializer_class = SedeSerializer
 
 
 # Crud de tabla Organizador (GET, POST, PUT, DELETE)
-class OrganizadorViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class OrganizadorViewSet(BaseApiViewSet):
     queryset = Organizador.objects.all()
     serializer_class = OrganizadorSerializer
 
 
 # Crud de tabla Evento (GET, POST, PUT, DELETE)
-class EventoViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class EventoViewSet(BaseApiViewSet):
     queryset = Evento.objects.all()
     serializer_class = EventoSerializer
 
 
 # Crud de tabla Asistente (GET, POST, PUT, DELETE)
-class AsistenteViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class AsistenteViewSet(BaseApiViewSet):
     queryset = Asistente.objects.all()
     serializer_class = AsistenteSerializer
 
 
 # Crud de tabla Inscripcion (GET, POST, PUT, DELETE)
-class InscripcionViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class InscripcionViewSet(BaseApiViewSet):
     queryset = Inscripcion.objects.all()
     serializer_class = InscripcionSerializer
 
 
 # Crud de tabla Pago (GET, POST, PUT, DELETE)
-class PagoViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class PagoViewSet(BaseApiViewSet):
     queryset = Pago.objects.all()
     serializer_class = PagoSerializer
 
 
 # Crud de tabla Conferencia (GET, POST, PUT, DELETE)
-class ConferenciaViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class ConferenciaViewSet(BaseApiViewSet):
     queryset = Conferencia.objects.all()
     serializer_class = ConferenciaSerializer
 
 
 # Crud de tabla Patrocinador (GET, POST, PUT, DELETE)
-class PatrocinadorViewSet(StandardResponseMixin, viewsets.ModelViewSet):
+class PatrocinadorViewSet(BaseApiViewSet):
     queryset = Patrocinador.objects.all()
     serializer_class = PatrocinadorSerializer
