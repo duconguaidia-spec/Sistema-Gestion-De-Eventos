@@ -17,6 +17,7 @@ class SedeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sede
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')
 
 
 # Serializador para Organizador
@@ -24,6 +25,7 @@ class OrganizadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organizador
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')
 
 
 # Serializador para Evento
@@ -42,6 +44,7 @@ class EventoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Evento
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')
 
 
 # Serializador para Asistente
@@ -49,6 +52,7 @@ class AsistenteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Asistente
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')
 
 
 # Serializador para Inscripcion
@@ -67,6 +71,7 @@ class InscripcionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Inscripcion
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')
 
 
 # Serializador para Pago
@@ -81,6 +86,7 @@ class PagoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pago
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')
 
 
 # Serializador para Conferencia
@@ -95,6 +101,7 @@ class ConferenciaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Conferencia
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')
 
 
 # Serializador para Patrocinador
@@ -109,3 +116,4 @@ class PatrocinadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patrocinador
         fields = '__all__'
+        read_only_fields = ('fecha_creacion', 'fecha_modificacion', 'creado_por', 'modificado_por')

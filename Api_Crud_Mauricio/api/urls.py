@@ -1,26 +1,19 @@
-from django.urls import path, include
-
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import (
-    SedeViewSet,
-    OrganizadorViewSet,
-    EventoViewSet,
     AsistenteViewSet,
-    InscripcionViewSet,
-    PagoViewSet,
     ConferenciaViewSet,
+    EventoViewSet,
+    InscripcionViewSet,
+    OrganizadorViewSet,
+    PagoViewSet,
     PatrocinadorViewSet,
+    SedeViewSet,
 )
-from django.contrib import admin
-from rest_framework import permissions
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
 
 
 router = DefaultRouter()
-
-# Registro de endpoints del api
 router.register(r'sedes', SedeViewSet)
 router.register(r'organizadores', OrganizadorViewSet)
 router.register(r'eventos', EventoViewSet)

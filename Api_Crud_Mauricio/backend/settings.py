@@ -141,6 +141,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'DEFAULT_PAGINATION_CLASS': 'api.pagination.ApiPagination',
+    'PAGE_SIZE': 5,
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
+    'DEFAULT_VERSION': 'v1',
+    'ALLOWED_VERSIONS': ['v1'],
 }
 
 SIMPLE_JWT = {
@@ -174,4 +179,16 @@ LOGGING = {
             'propagate': False,
         },
     },
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header',
+            'description': 'Ingrese el token con el formato: Bearer <access_token>',
+        },
+    },
+    'USE_SESSION_AUTH': False,
 }
