@@ -313,6 +313,7 @@ GET /api/v1/sedes/?page=1&page_size=10
 
 ## Estructura del Proyecto
 
+```
 proyecto/
 │
 ├── api/
@@ -326,20 +327,23 @@ proyecto/
 │   ├── responses.py
 │   ├── logging_mixins.py
 │   └── auth_views.py
+│
 ├── backend/
 │   ├── settings.py
 │   └── urls.py
+│
 ├── logs/
 │   └── operations.log
+│
 ├── docs/
 ├── evidencias/
+├── .env
 ├── .env.example
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
 └── manage.py
-
----
+```
 
 ## Caracteristicas Implementadas
 
